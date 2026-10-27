@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ideas, recursos y criterios para integrar la inteligencia artificial de forma crítica, ética y pedagógica en la educación.">
+<title>IA y Educación | Innovación pedagógica</title>
+<style>
+:root {
+  --site-primary: #174e4a;
+  --site-secondary: #d9eee7;
+  --site-background: #f7f8f4;
+  --site-on-primary: #ffffff;
+  --site-on-secondary: #173d39;
+  --site-on-background: #1d302e;
+  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: Georgia, "Times New Roman", serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  color-scheme: light dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--site-font-body); background: light-dark(#f7f8f4,#111a19); color: light-dark(#1d302e,#e7f0ed); line-height: 1.65; }
+#app { min-height: 100vh; width: 100%; border-radius: 0; background-color: var(--site-background); color: var(--site-on-background); }
+a { color: inherit; }
+button, input, textarea, select { font: inherit; }
+button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 3px solid #d28b51; outline-offset: 3px; }
+.container { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+.topbar { background: var(--site-primary); color: var(--site-on-primary); font-size: .88rem; }
+.topbar-inner { display:flex; justify-content:space-between; align-items:center; gap:16px; padding: 10px 0; }
+.topbar p { margin:0; opacity:.9; }
+.topbar a { text-decoration:none; font-weight:700; }
+.nav-wrap { background: light-dark(#ffffff,#192624); border-bottom:1px solid light-dark(#e0e8e3,#2c3c38); }
+.nav { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:18px 0; }
+.brand { display:flex; gap:12px; align-items:center; text-decoration:none; }
+.brand-mark { width:42px; height:42px; display:grid; place-items:center; border-radius:14px; background:var(--site-secondary); color:var(--site-on-secondary); font-size:1.3rem; }
+.brand strong { display:block; letter-spacing:-.03em; font-size:1.02rem; }
+.brand small { display:block; font-size:.76rem; opacity:.7; }
+.nav-links { display:flex; align-items:center; gap:22px; }
+.nav-links a { text-decoration:none; font-size:.92rem; font-weight:650; opacity:.85; }
+.nav-links a:hover { color:var(--site-primary); }
+.menu-toggle { display:none; background:transparent; color:inherit; border:1px solid currentColor; border-radius:10px; padding:7px 11px; cursor:pointer; }
+.hero { position:relative; overflow:hidden; background:var(--site-primary); color:var(--site-on-primary); padding: clamp(64px,9vw,112px) 0 76px; }
+.hero::after { content:""; position:absolute; width:430px; height:430px; right:-110px; top:-180px; border:1px solid rgba(255,255,255,.18); border-radius:50%; box-shadow:0 0 0 50px rgba(255,255,255,.035),0 0 0 100px rgba(255,255,255,.025); opacity:var(--site-decoration-opacity); pointer-events:none; }
+.hero-grid { display:grid; grid-template-columns:1.25fr .75fr; gap:52px; align-items:center; position:relative; z-index:1; }
+.eyebrow { display:inline-flex; align-items:center; gap:8px; text-transform:uppercase; letter-spacing:.13em; font-size:.76rem; font-weight:800; color:light-dark(#bce4d6,#bce4d6); }
+.eyebrow::before { content:""; width:24px; height:2px; background:currentColor; }
+h1,h2,h3 { font-family:var(--site-font-heading); line-height:1.12; letter-spacing:-.035em; }
+h1 { font-size:calc(clamp(2.7rem,6.2vw,5.1rem) * var(--site-heading-scale)); max-width:750px; margin:22px 0; font-weight:600; }
+.hero .lead { max-width:650px; color:#e0eeea; font-size:clamp(1.05rem,1.7vw,1.23rem); }
+.hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+.btn { display:inline-flex; justify-content:center; align-items:center; gap:8px; border:1px solid transparent; border-radius:999px; padding:12px 20px; text-decoration:none; font-weight:750; cursor:pointer; transition:transform .18s ease, background .18s ease; }
+.btn:hover { transform:translateY(-2px); }
+.btn-light { background:#fff; color:#174e4a; }
+.btn-outline { border-color:rgba(255,255,255,.55); color:#fff; background:transparent; }
+.hero-card { padding:26px; background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.2); border-radius:calc(28px * var(--site-radius-scale)); backdrop-filter:blur(6px); }
+.hero-card .orb { width:76px; height:76px; display:grid; place-items:center; border-radius:24px; background:#d9eee7; color:#174e4a; font-size:2rem; margin-bottom:22px; }
+.hero-card h2 { font-size:calc(1.65rem * var(--site-heading-scale)); margin:0 0 12px; }
+.hero-card p { margin:0; color:#e0eeea; }
+.hero-stat { display:flex; gap:14px; align-items:center; border-top:1px solid rgba(255,255,255,.2); margin-top:24px; padding-top:18px; }
+.hero-stat strong { font-family:var(--site-font-heading); font-size:1.6rem; }
+.hero-stat span { font-size:.88rem; color:#d6e8e2; }
+.section { padding:calc(78px * var(--site-spacing-scale)) 0; }
+.section-heading { max-width:760px; margin-bottom:34px; }
+.kicker { text-transform:uppercase; letter-spacing:.12em; color:light-dark(#3f7d70,#94cdbd); font-weight:800; font-size:.75rem; }
+h2 { font-size:calc(clamp(2rem,4vw,3.25rem) * var(--site-heading-scale)); margin:10px 0 15px; }
+h3 { font-size:calc(1.5rem * var(--site-heading-scale)); margin:0 0 12px; }
+.muted { color:light-dark(#5e716c,#b2c3bd); }
+.cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.card { background:light-dark(#fff,#1a2825); border:1px solid light-dark(#e1e9e4,#2b3b36); border-radius:calc(22px * var(--site-radius-scale)); padding:26px; }
+.card-icon { width:48px; height:48px; display:grid; place-items:center; border-radius:15px; background:var(--site-secondary); color:var(--site-on-secondary); font-size:1.35rem; margin-bottom:20px; }
+.card p { margin-bottom:0; color:light-dark(#5e716c,#b2c3bd); }
+.feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:stretch; }
+.feature { padding:32px; border-radius:calc(24px * var(--site-radius-scale)); background:var(--site-secondary); color:var(--site-on-secondary); }
+.feature:nth-child(2) { background:light-dark(#e9e4d8,#29332e); color:light-dark(#293b35,#e9eee7); }
+.feature p { margin-bottom:0; }
+.feature .number { font-size:.8rem; font-weight:850; letter-spacing:.12em; opacity:.7; margin-bottom:24px; }
+.tool-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.tool { border:1px solid light-dark(#e1e9e4,#2b3b36); border-radius:calc(18px * var(--site-radius-scale)); padding:22px; background:light-dark(#fff,#1a2825); }
+.tool .symbol { font-size:1.5rem; margin-bottom:14px; }
+.tool h3 { font-family:var(--site-font-body); font-size:1.05rem; letter-spacing:-.02em; }
+.tool p { font-size:.92rem; margin:0; color:light-dark(#5e716c,#b2c3bd); }
+.gallery-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.gallery-card { overflow:hidden; border-radius:calc(22px * var(--site-radius-scale)); background:light-dark(#fff,#1a2825); border:1px solid light-dark(#e1e9e4,#2b3b36); }
+.gallery-card img { display:block; width:100%; aspect-ratio:4/3; object-fit:cover; background:var(--site-secondary); }
+.gallery-copy { padding:22px; }
+.gallery-copy h3 { font-size:1.3rem; }
+.gallery-copy p { margin:0; color:light-dark(#5e716c,#b2c3bd); font-size:.94rem; }
+.gallery-note { margin-top:18px; font-size:.86rem; }
+.section-photo { margin: 0 0 30px; overflow:hidden; border-radius:calc(22px * var(--site-radius-scale)); background:var(--site-secondary); }
+.section-photo img { display:block; width:100%; height:clamp(190px, 29vw, 340px); object-fit:cover; }
+.section-photo figcaption { padding:12px 17px; font-size:.88rem; color:var(--site-on-secondary); background:var(--site-secondary); }
+.hero-photo { width:100%; max-height:220px; object-fit:cover; border-radius:16px; margin-bottom:20px; }
+.table-wrap { overflow-x:auto; border:1px solid light-dark(#dfe7e1,#2b3b36); border-radius:calc(18px * var(--site-radius-scale)); background:light-dark(#fff,#1a2825); }
+table { width:100%; border-collapse:collapse; min-width:600px; text-align:left; }
+caption { text-align:left; padding:18px 20px; font-weight:750; }
+th,td { padding:17px 20px; border-top:1px solid light-dark(#e5ebe7,#2b3b36); vertical-align:top; }
+th { background:light-dark(#edf4ef,#22322e); font-size:.84rem; text-transform:uppercase; letter-spacing:.05em; }
+td { font-size:.94rem; }
+.pill { display:inline-block; background:var(--site-secondary); color:var(--site-on-secondary); padding:4px 9px; border-radius:999px; font-size:.77rem; font-weight:800; }
+.ethics { background:light-dark(#e9f0eb,#1a2825); }
+.ethics-grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:48px; align-items:start; }
+.ethics-list { display:grid; gap:12px; }
+.ethics-item { display:flex; gap:15px; padding:18px; border-radius:16px; background:light-dark(#fff,#22322e); border:1px solid light-dark(#dfe8e1,#2b3b36); }
+.ethics-item .check { flex:0 0 28px; height:28px; display:grid; place-items:center; border-radius:50%; background:var(--site-secondary); color:var(--site-on-secondary); font-weight:900; }
+.ethics-item strong { display:block; margin-bottom:3px; }
+.ethics-item p { margin:0; font-size:.92rem; color:light-dark(#5e716c,#b2c3bd); }
+.contact-panel { display:grid; grid-template-columns:.85fr 1.15fr; gap:42px; padding:clamp(24px,5vw,48px); background:var(--site-primary); color:var(--site-on-primary); border-radius:calc(28px * var(--site-radius-scale)); }
+.contact-panel p { color:#d9e9e3; }
+.contact-links { display:grid; gap:12px; margin-top:25px; }
+.contact-links a { text-decoration:none; border-bottom:1px solid rgba(255,255,255,.25); padding:0 0 12px; }
+form { display:grid; gap:15px; }
+label { display:block; font-size:.9rem; font-weight:750; margin-bottom:6px; }
+input,textarea { width:100%; padding:12px 14px; border:1px solid light-dark(#d3dfd7,#4b6058); border-radius:12px; background:light-dark(#fff,#14201d); color:light-dark(#1d302e,#e7f0ed); }
+textarea { resize:vertical; min-height:120px; }
+.form-note { font-size:.8rem; color:#d9e9e3; margin:0; }
+.form-status { min-height:1.5em; font-size:.9rem; font-weight:700; }
+footer { background:light-dark(#fff,#192624); border-top:1px solid light-dark(#e0e8e3,#2c3c38); padding:25px 0; }
+.footer-inner { display:flex; justify-content:space-between; align-items:center; gap:18px; flex-wrap:wrap; font-size:.88rem; }
+footer p { margin:0; color:light-dark(#5e716c,#b2c3bd); }
+footer a { font-weight:750; text-decoration:none; }
+@media (max-width: 850px) {
+  .hero-grid,.ethics-grid,.contact-panel { grid-template-columns:1fr; }
+  .hero-grid { gap:34px; }
+  .cards,.gallery-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .tool-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .nav-links { display:none; position:absolute; top:100%; left:0; right:0; padding:18px 22px; background:light-dark(#fff,#192624); border-bottom:1px solid light-dark(#e0e8e3,#2c3c38); flex-direction:column; align-items:flex-start; z-index:5; }
+  .nav-links.open { display:flex; }
+  .nav { position:relative; }
+  .menu-toggle { display:block; }
+}
+@media (max-width: 560px) {
+  .container { width:min(100% - 28px,1120px); }
+  .topbar-inner { align-items:flex-start; flex-direction:column; gap:4px; }
+  .cards,.feature-grid,.tool-grid,.gallery-grid { grid-template-columns:1fr; }
+  .section { padding:56px 0; }
+  .hero { padding:58px 0 60px; }
+  .hero-card { padding:22px; }
+  .contact-panel { padding:23px; }
+  .btn { width:100%; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } *,*::before,*::after { transition:none !important; animation:none !important; } }
+</style>
+</head>
+<body>
+<div id="app" data-sites-preview-theme="custom">
+  <div class="topbar"><div class="container topbar-inner"><p>Ideas para enseñar y aprender en tiempos de IA</p><a href="#etica">Tecnología con responsabilidad ↓</a></div></div>
+  <div class="nav-wrap">
+    <nav class="container nav" aria-label="Navegación principal">
+      <a class="brand" href="#inicio" aria-label="IA y Educación, inicio"><span class="brand-mark" aria-hidden="true">✳</span><span><strong>IA & Educación</strong><small>Innovación pedagógica</small></span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menú ☰</button>
+      <div class="nav-links" id="nav-links">
+        <a href="#fundamentos">Fundamentos</a><a href="#herramientas">Herramientas</a><a href="#galeria">Galería visual</a><a href="#comparativa">Comparativa</a><a href="#etica">Uso responsable</a><a href="#contacto">Contacto</a>
+      </div>
+    </nav>
+  </div>
+  <header class="hero" id="inicio">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Educación · Tecnología · Pensamiento crítico</span>
+        <h1>La inteligencia artificial al servicio del aprendizaje.</h1>
+        <p class="lead">Un espacio para explorar herramientas, diseñar experiencias pedagógicas y pensar críticamente cómo integrar la IA de manera ética, creativa e inclusiva en las aulas.</p>
+        <div class="hero-actions"><a class="btn btn-light" href="#herramientas">Explorar herramientas ↗</a><a class="btn btn-outline" href="#fundamentos">Conocer los fundamentos</a></div>
+      </div>
+      <aside class="hero-card" aria-label="Idea central">
+        <div class="orb" aria-hidden="true">✦</div>
+        <h2>La tecnología acompaña. El criterio pedagógico orienta.</h2>
+        <p>La IA puede ampliar posibilidades, pero el vínculo humano, la mirada docente y la autonomía del estudiante siguen siendo centrales.</p>
+        <div class="hero-stat"><strong>3 claves</strong><span>Propósito pedagógico · Pensamiento crítico · Responsabilidad</span></div>
+      </aside>
+    </div>
+  </header>
+  <main>
+    <section class="section" id="fundamentos">
+      <div class="container">
+        <div class="section-heading"><span class="kicker">01 · Fundamentos</span><h2>Una innovación que empieza con buenas preguntas.</h2><p class="muted">Incorporar inteligencia artificial no consiste solamente en sumar herramientas. Implica revisar qué enseñamos, cómo aprendemos y qué decisiones deben seguir en manos de las personas.</p></div>
+        <div class="cards">
+          <article class="card"><div class="card-icon" aria-hidden="true">◎</div><h3>El rol docente</h3><p>La IA puede colaborar en la planificación, la elaboración de materiales y la adaptación de actividades. El docente conserva la responsabilidad de orientar, contextualizar y evaluar los aprendizajes.</p></article>
+          <article class="card"><div class="card-icon" aria-hidden="true">⌘</div><h3>Pensamiento crítico</h3><p>Las respuestas automatizadas deben analizarse, contrastarse y cuestionarse. Aprender con IA también significa reconocer errores, sesgos y límites.</p></article>
+          <article class="card"><div class="card-icon" aria-hidden="true">♡</div><h3>Inclusión y diversidad</h3><p>Los recursos digitales pueden ofrecer distintas formas de explicar, leer, escuchar y crear. Su uso debe considerar accesibilidad, contexto y necesidades de cada estudiante.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section" style="background:light-dark(#ffffff,#14201d)">
+      <div class="container">
+        <div class="section-heading"><span class="kicker">02 · Enfoque pedagógico</span><h2>De la respuesta automática a la construcción del conocimiento.</h2></div>
+        <div class="feature-grid">
+          <article class="feature"><div class="number">01 / DISEÑAR</div><h3>Prompts con intención</h3><p>Una consigna clara define el propósito, el nivel educativo, el contexto, el formato esperado y los criterios de calidad. Cuanto mejor se formula el problema, más útil puede ser la asistencia de la IA.</p></article>
+          <article class="feature"><div class="number">02 / EVALUAR</div><h3>La respuesta no es la verdad</h3><p>Comparar fuentes, revisar datos y justificar decisiones ayuda a que los estudiantes no acepten una respuesta por el solo hecho de que parezca convincente o esté bien redactada.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="herramientas">
+      <div class="container">
+        <div class="section-heading"><span class="kicker">03 · Recursos</span><h2>Herramientas para explorar nuevas posibilidades.</h2><p class="muted">Cada plataforma ofrece funciones diferentes. La elección depende de la actividad, la edad del grupo, las condiciones de acceso y las políticas institucionales de privacidad.</p></div>
+        <div class="tool-grid">
+          <article class="tool"><div class="symbol" aria-hidden="true">✧</div><h3>ChatGPT</h3><p>Generación de ideas, explicación de conceptos, simulación de diálogos y apoyo en la planificación.</p></article>
+          <article class="tool"><div class="symbol" aria-hidden="true">✺</div><h3>Gemini</h3><p>Exploración de información, organización de ideas y asistencia en tareas de producción.</p></article>
+          <article class="tool"><div class="symbol" aria-hidden="true">▧</div><h3>Leonardo AI</h3><p>Creación de imágenes y recursos visuales para acompañar propuestas didácticas.</p></article>
+          <article class="tool"><div class="symbol" aria-hidden="true">♫</div><h3>ElevenLabs</h3><p>Generación de voz y audio, con posibles aplicaciones en recursos accesibles y contenidos sonoros.</p></article>
+        </div>
+        <p class="muted" style="font-size:.88rem;margin-top:18px">Antes de utilizar una plataforma, revisá sus condiciones vigentes, requisitos de edad, políticas de datos y opciones gratuitas o pagas.</p>
+      </div>
+    </section>
+    <section class="section" id="galeria" style="background:light-dark(#ffffff,#14201d)">
+      <div class="container">
+        <div class="section-heading"><span class="kicker">04 · Inspiración visual</span><h2>Ideas que conectan tecnología y aula.</h2><p class="muted">Una selección visual que combina experiencias educativas, trabajo colaborativo y creatividad con inteligencia artificial.</p></div>
+        <div class="gallery-grid">
+          <article class="gallery-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23d9eee7'/%3E%3Crect x='65' y='70' width='670' height='300' rx='22' fill='%23ffffff'/%3E%3Crect x='100' y='105' width='600' height='210' rx='12' fill='%23b9dcd0'/%3E%3Cpath d='M100 275 L240 165 L350 250 L475 140 L700 280 V315 H100Z' fill='%23174e4a' opacity='.8'/%3E%3Ccircle cx='600' cy='160' r='35' fill='%23f2c078'/%3E%3Crect x='90' y='390' width='620' height='24' rx='12' fill='%23174e4a'/%3E%3Cg fill='%23d28b51'%3E%3Ccircle cx='180' cy='455' r='35'/%3E%3Ccircle cx='310' cy='455' r='35'/%3E%3Ccircle cx='440' cy='455' r='35'/%3E%3Ccircle cx='570' cy='455' r='35'/%3E%3C/g%3E%3Cg fill='%23174e4a'%3E%3Cpath d='M130 535 Q180 465 230 535Z'/%3E%3Cpath d='M260 535 Q310 465 360 535Z'/%3E%3Cpath d='M390 535 Q440 465 490 535Z'/%3E%3Cpath d='M520 535 Q570 465 620 535Z'/%3E%3C/g%3E%3C/svg%3E" alt="Ilustración de un aula con recursos visuales y estudiantes colaborando" loading="lazy"><div class="gallery-copy"><h3>Aprender en comunidad</h3><p>La tecnología tiene sentido cuando fortalece la participación, el diálogo y la construcción compartida del conocimiento.</p></div></article>
+          <article class="gallery-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23174e4a'/%3E%3Cg stroke='%23b9e4d7' stroke-width='4' opacity='.65'%3E%3Cpath d='M120 130 L280 210 L410 100 L560 220 L690 120 M120 130 L170 390 L360 450 L560 220 L650 430 L360 450 L280 210 M170 390 L80 500 M650 430 L730 520' fill='none'/%3E%3C/g%3E%3Cg fill='%23d9eee7'%3E%3Ccircle cx='120' cy='130' r='22'/%3E%3Ccircle cx='280' cy='210' r='22'/%3E%3Ccircle cx='410' cy='100' r='22'/%3E%3Ccircle cx='560' cy='220' r='22'/%3E%3Ccircle cx='690' cy='120' r='22'/%3E%3Ccircle cx='170' cy='390' r='22'/%3E%3Ccircle cx='360' cy='450' r='22'/%3E%3Ccircle cx='650' cy='430' r='22'/%3E%3C/g%3E%3Crect x='250' y='245' width='300' height='110' rx='25' fill='%23ffffff'/%3E%3Ctext x='400' y='316' font-family='Arial,sans-serif' font-size='56' font-weight='bold' text-anchor='middle' fill='%23174e4a'%3EIA%3C/text%3E%3C/svg%3E" alt="Ilustración de inteligencia artificial representada con una red digital" loading="lazy"><div class="gallery-copy"><h3>Explorar la IA</h3><p>Las herramientas generativas abren nuevas posibilidades para crear imágenes, explicar conceptos y diseñar recursos.</p></div></article>
+          <article class="gallery-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23f2eadc'/%3E%3Crect x='110' y='90' width='580' height='400' rx='24' fill='%23ffffff' stroke='%23d9eee7' stroke-width='8'/%3E%3Crect x='155' y='135' width='210' height='145' rx='12' fill='%23d9eee7'/%3E%3Cpath d='M180 245 L235 175 L275 220 L315 165 L345 245Z' fill='%23174e4a'/%3E%3Ccircle cx='310' cy='165' r='14' fill='%23d28b51'/%3E%3Crect x='400' y='145' width='230' height='18' rx='9' fill='%23174e4a'/%3E%3Crect x='400' y='185' width='190' height='12' rx='6' fill='%23b6c9c0'/%3E%3Crect x='400' y='215' width='210' height='12' rx='6' fill='%23b6c9c0'/%3E%3Crect x='155' y='315' width='475' height='14' rx='7' fill='%23b6c9c0'/%3E%3Crect x='155' y='350' width='420' height='14' rx='7' fill='%23b6c9c0'/%3E%3Crect x='155' y='385' width='450' height='14' rx='7' fill='%23b6c9c0'/%3E%3Crect x='155' y='430' width='170' height='32' rx='16' fill='%23174e4a'/%3E%3C/svg%3E" alt="Ilustración de una ficha didáctica con imagen, texto y recursos de aprendizaje" loading="lazy"><div class="gallery-copy"><h3>Diseñar experiencias</h3><p>Combinar recursos visuales, consignas claras y objetivos pedagógicos ayuda a construir propuestas significativas.</p></div></article>
+        </div>
+        <p class="muted gallery-note">Las ilustraciones están integradas en la página, por lo que se muestran sin depender de servicios externos de imágenes.</p>
+      </div>
+    </section>
+    <section class="section" id="comparativa" style="background:light-dark(#ffffff,#14201d)">
+      <div class="container">
+        <div class="section-heading"><span class="kicker">04 · Aplicaciones</span><h2>¿Qué tarea querés resolver?</h2><p class="muted">La herramienta es un medio: el objetivo de aprendizaje debe definir su uso.</p></div>
+        <div class="table-wrap">
+          <table>
+            <caption>Ejemplos de aplicaciones en la práctica docente</caption>
+            <thead><tr><th>Área de trabajo</th><th>Aplicación posible</th><th>Qué revisar</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Planificación</strong></td><td>Diseñar secuencias, actividades y preguntas orientadoras.</td><td><span class="pill">Coherencia curricular</span></td></tr>
+              <tr><td><strong>Evaluación</strong></td><td>Proponer rúbricas, criterios y devoluciones iniciales.</td><td><span class="pill">Juicio docente</span></td></tr>
+              <tr><td><strong>Accesibilidad</strong></td><td>Adaptar textos, crear explicaciones alternativas y guiones de audio.</td><td><span class="pill">Necesidades reales</span></td></tr>
+              <tr><td><strong>Producción creativa</strong></td><td>Explorar imágenes, relatos, presentaciones y materiales audiovisuales.</td><td><span class="pill">Autoría y derechos</span></td></tr>
+              <tr><td><strong>Investigación</strong></td><td>Organizar preguntas, comparar perspectivas y generar hipótesis.</td><td><span class="pill">Fuentes verificables</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section class="section ethics" id="etica">
+      <div class="container ethics-grid">
+        <div><span class="kicker">05 · Uso responsable</span><h2>Innovar también es cuidar.</h2><p class="muted">Una integración educativa responsable pone en el centro los derechos, la dignidad, la privacidad y la capacidad de pensar por cuenta propia.</p></div>
+        <div class="ethics-list">
+          <div class="ethics-item"><span class="check" aria-hidden="true">✓</span><div><strong>Verificar la información</strong><p>Contrastar afirmaciones importantes con fuentes confiables y actualizadas.</p></div></div>
+          <div class="ethics-item"><span class="check" aria-hidden="true">✓</span><div><strong>Proteger los datos personales</strong><p>No ingresar nombres, imágenes, calificaciones ni información sensible de estudiantes sin autorización y garantías adecuadas.</p></div></div>
+          <div class="ethics-item"><span class="check" aria-hidden="true">✓</span><div><strong>Reconocer la autoría</strong><p>Promover la transparencia sobre el uso de IA y respetar las normas de citación y producción académica.</p></div></div>
+          <div class="ethics-item"><span class="check" aria-hidden="true">✓</span><div><strong>Conservar la autonomía</strong><p>Usar la herramienta para pensar mejor, no para delegar completamente el razonamiento o la decisión.</p></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="contacto">
+      <div class="container contact-panel">
+        <div><span class="eyebrow">Conversemos</span><h2>Compartir experiencias también transforma la educación.</h2><p>Este espacio puede servir para coordinar talleres, intercambiar propuestas y conversar sobre el uso pedagógico de la inteligencia artificial.</p><div class="contact-links"><a href="https://www.argentina.gob.ar/educacion" target="_blank" rel="noopener noreferrer">Ministerio de Educación de la Nación ↗</a><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram ↗</a></div></div>
+        <div><h3>Formulario de consulta</h3><p class="form-note">Prototipo demostrativo: el formulario no envía mensajes a un servidor.</p>
+          <form id="contact-form">
+            <div><label for="nombre">Nombre completo</label><input id="nombre" name="nombre" autocomplete="name" required placeholder="Tu nombre"></div>
+            <div><label for="email">Correo electrónico</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="nombre@correo.com"></div>
+            <div><label for="tema">Motivo de la consulta</label><select id="tema" name="tema" required><option value="">Seleccioná una opción</option><option>Capacitación o taller</option><option>Recursos didácticos</option><option>Proyecto institucional</option><option>Otro tema</option></select></div>
+            <div><label for="mensaje">Consulta o comentario</label><textarea id="mensaje" name="mensaje" required placeholder="Contame brevemente en qué te gustaría trabajar..."></textarea></div>
+            <button class="btn btn-light" type="submit">Preparar consulta ↗</button>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="container footer-inner"><p>© 2026 · IA & Educación · Innovación pedagógica</p><p>Una tecnología más humana comienza con una pregunta crítica.</p><a href="#inicio">Volver al inicio ↑</a></div></footer>
+</div>
+<script>
+// Fotografías reales para la galería. Requieren conexión a internet.
+const galleryPhotos = [
+  'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000&q=85',
+  'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=85',
+  'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=85'
+];
+document.querySelectorAll('.gallery-card img').forEach((img, index) => {
+  if (galleryPhotos[index]) img.src = galleryPhotos[index];
+});
+// Fotografías reales para acompañar el contenido de todas las secciones.
+const sectionPhotos = [
+  { selector: '#fundamentos', src: 'https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1400&q=85', alt: 'Docente acompañando a estudiantes en una actividad de aula', caption: 'El aprendizaje comienza con el encuentro, la curiosidad y la participación.' },
+  { selector: 'main > section:nth-of-type(2)', src: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1400&q=85', alt: 'Cuaderno y materiales utilizados para planificar una actividad', caption: 'Diseñar buenas consignas y revisar las respuestas convierte la tecnología en una oportunidad para pensar.' },
+  { selector: '#herramientas', src: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=85', alt: 'Persona trabajando con recursos digitales en una computadora', caption: 'Elegir herramientas digitales requiere un propósito pedagógico claro.' },
+  { selector: '#comparativa', src: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1400&q=85', alt: 'Equipo organizando ideas y materiales sobre una mesa', caption: 'Cada recurso debe responder a una necesidad concreta de enseñanza y aprendizaje.' },
+  { selector: '#etica', src: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1400&q=85', alt: 'Estudiantes compartiendo una experiencia de aprendizaje', caption: 'Una innovación responsable pone a las personas, sus derechos y su autonomía en el centro.' },
+  { selector: '#contacto', src: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1400&q=85', alt: 'Personas colaborando en una reunión de trabajo', caption: 'Compartir experiencias y construir redes también transforma la educación.' }
+];
+sectionPhotos.forEach(photo => {
+  const section = document.querySelector(photo.selector);
+  const heading = section && section.querySelector('.section-heading');
+  const anchor = heading || (photo.selector === '#etica'
+    ? section.querySelector('.ethics-grid > div:first-child p')
+    : photo.selector === '#contacto'
+      ? section.querySelector('.contact-panel > div:first-child p:nth-of-type(2)')
+      : null);
+  if (!anchor) return;
+  const figure = document.createElement('figure');
+  figure.className = 'section-photo';
+  const img = document.createElement('img');
+  img.src = photo.src;
+  img.alt = photo.alt;
+  img.loading = 'lazy';
+  const caption = document.createElement('figcaption');
+  caption.textContent = photo.caption;
+  figure.append(img, caption);
+  anchor.insertAdjacentElement('afterend', figure);
+});
+const heroCard = document.querySelector('.hero-card');
+if (heroCard) {
+  const heroPhoto = document.createElement('img');
+  heroPhoto.className = 'hero-photo';
+  heroPhoto.src = 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000&q=85';
+  heroPhoto.alt = 'Aula luminosa preparada para una experiencia de aprendizaje';
+  heroPhoto.loading = 'eager';
+  heroCard.insertBefore(heroPhoto, heroCard.firstChild);
+}
+const menuButton = document.querySelector('.menu-toggle');
+const navLinks = document.querySelector('.nav-links');
+menuButton.addEventListener('click', () => {
+  const expanded = menuButton.getAttribute('aria-expanded') === 'true';
+  menuButton.setAttribute('aria-expanded', String(!expanded));
+  navLinks.classList.toggle('open', !expanded);
+});
+navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+  navLinks.classList.remove('open');
+  menuButton.setAttribute('aria-expanded', 'false');
+}));
+document.getElementById('contact-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const data = new FormData(form);
+  const subject = encodeURIComponent('Consulta sobre IA y Educación: ' + data.get('tema'));
+  const body = encodeURIComponent(
+    'Nombre: ' + data.get('nombre') + '\\nCorreo: ' + data.get('email') +
+    '\\nTema: ' + data.get('tema') + '\\n\\nConsulta:\\n' + data.get('mensaje')
+  );
+  document.getElementById('form-status').textContent =
+    'La consulta está preparada. Para enviarla, conectá este formulario a un servicio o configurá un correo institucional.';
+  // No se abre ni envía información automáticamente; el prototipo no tiene destinatario configurado.
+});
+</script>
+</body>
+</html>
